@@ -20,13 +20,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        origin
-        for origin in [
-            "http://localhost:3000",
-            "http://127.0.0.1:3000",
-            os.getenv("FRONTEND_URL"),
-        ]
-        if origin
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://meetscribe-black.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
