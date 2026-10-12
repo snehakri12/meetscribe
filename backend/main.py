@@ -12,10 +12,9 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="MeetScribe API",
-    description="Backend API for meeting notes and transcripts",
+    description="Backend API for meeting notes, transcripts, summaries, and action items",
     version="1.0.0",
 )
-
 
 
 app.add_middleware(
@@ -35,7 +34,6 @@ app.add_middleware(
 )
 
 
-
 def get_db():
     db = SessionLocal()
     try:
@@ -47,7 +45,7 @@ def get_db():
 @app.get("/")
 def home():
     return {
-        "message": "Fireflies Clone API is running",
+        "message": "MeetScribe API is running",
         "status": "success",
     }
 
