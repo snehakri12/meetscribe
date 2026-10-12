@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/* Dark mode is class-based so the user can override the OS preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #f6f6fa;
+  --surface: #ffffff;
+  --surface-2: #f3f3f8;
+  --surface-3: #ebebf3;
+  --border: #e6e6ee;
+  --text: #1b1b2b;
+  --muted: #5f5f75;
+  --subtle: #8a8aa0;
+  --primary: #6d4aff;
+  --primary-hover: #5b37f0;
+  --primary-soft: #f0ecff;
+  --primary-text: #5a36e8;
+  --success: #16a34a;
+  --success-soft: #e8f7ee;
+  --danger: #dc2626;
+  --danger-soft: #fdecec;
+  --warning-soft: #fff6d6;
+  --mark: #ffe58a;
+  --shadow: 0 1px 2px rgb(16 16 40 / 0.04), 0 4px 16px rgb(16 16 40 / 0.06);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0f0f17;
+  --surface: #171723;
+  --surface-2: #1f1f2e;
+  --surface-3: #2a2a3c;
+  --border: #2c2c3f;
+  --text: #ececf4;
+  --muted: #a9a9be;
+  --subtle: #7d7d95;
+  --primary: #8b6dff;
+  --primary-hover: #9d84ff;
+  --primary-soft: #2a2350;
+  --primary-text: #b5a2ff;
+  --success: #34d399;
+  --success-soft: #11372a;
+  --danger: #f87171;
+  --danger-soft: #3d1a1d;
+  --warning-soft: #3a3115;
+  --mark: #8a6d00;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 16px rgb(0 0 0 / 0.3);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-text: var(--primary-text);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning-soft: var(--warning-soft);
+  --color-mark: var(--mark);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --shadow-card: var(--shadow);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-border bg-surface;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50 bg-primary text-white hover:bg-primary-hover;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50 border border-border bg-surface text-text hover:bg-surface-2;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50 text-muted hover:bg-surface-2 hover:text-text;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50 bg-danger text-white hover:opacity-90;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text placeholder:text-subtle outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20;
+  }
+
+  .label {
+    @apply mb-1.5 block text-xs font-semibold text-muted;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1 text-xs font-medium text-muted;
+  }
+}
+
+mark {
+  background: var(--mark);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+mark.active-match {
+  outline: 2px solid var(--primary);
+}
+
+/* Native range input styled as the player's seek bar */
+input[type="range"].seek {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  width: 100%;
+  height: 18px;
+  cursor: pointer;
+}
+input[type="range"].seek::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: transparent;
+}
+input[type="range"].seek::-moz-range-track {
+  height: 4px;
+  background: transparent;
+}
+input[type="range"].seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  margin-top: -5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--primary);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+input[type="range"].seek::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: var(--primary);
+  border: 2px solid var(--surface);
+}
