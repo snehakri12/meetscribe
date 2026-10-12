@@ -58,6 +58,16 @@ function parseJson<T>(value: string | T, fallback: T): T {
   }
 }
 
+
+function secondsToTimestamp(totalSeconds: number): string {
+  const seconds = Math.max(0, Math.floor(Number(totalSeconds) || 0));
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+}
+
+
 function fromApiMeeting(
   meeting: ApiMeeting,
   tasks: ApiTask[],
@@ -71,7 +81,10 @@ function fromApiMeeting(
     duration: meeting.duration,
     participants: parseJson<string[]>(meeting.participants, []),
     summary: meeting.summary || "",
-    transcript: parseJson<TranscriptLine[]>(meeting.transcript, []),
+    transcript: parseJson<Array<TranscriptLine & { timestamp?: number }>>(meeting.transcript, []).map((line) => ({
+      ...line,
+      time: line.time || secondsToTimestamp(line.timestamp ?? 0),
+    })),
     topics,
     category: topics[0] || "General",
     tasks: tasks
