@@ -1,4 +1,5 @@
 
+import os
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -10,18 +11,29 @@ import schemas
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="Fireflies Clone API",
+    title="MeetScribe API",
     description="Backend API for meeting notes and transcripts",
     version="1.0.0",
 )
 
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        origin
+        for origin in [
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            os.getenv("FRONTEND_URL"),
+        ]
+        if origin
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 def get_db():
