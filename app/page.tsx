@@ -105,7 +105,7 @@ function formatDate(date: string) {
 }
 
 function timestampToSeconds(time: string) {
-  const parts = time.split(":").map(Number);
+  const parts = (time ?? "00:00").split(":").map(Number);
 
   if (parts.some((part) => !Number.isFinite(part))) return 0;
 
