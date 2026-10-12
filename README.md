@@ -1,36 +1,157 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MeetScribe — Meeting Notes & Transcription Platform
 
-## Getting Started
+MeetScribe is a full-stack meeting notes and transcription platform that helps users organize meetings, search transcripts, review summaries, and manage action items in one workspace.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Meeting Dashboard:** Browse, search, filter, and sort meeting records.
+- **Meeting Details:** View meeting metadata, participants, duration, and topics.
+- **Transcript Viewer:** Read timestamped transcript entries with speaker labels.
+- **Transcript Search:** Search within a meeting transcript and highlight matching text.
+- **Audio Player:** Play sample audio and navigate using transcript timestamps.
+- **Meeting Summaries:** View and edit meeting summaries.
+- **Action Items:** Create, edit, complete, and delete tasks associated with meetings.
+- **Meeting Management:** Create meetings, edit titles and participants, edit transcripts, and delete meetings.
+- **Persistent Storage:** Store meeting and task data in SQLite through a FastAPI backend.
+- **Export:** Export meeting information, summaries, transcripts, topics, and action items as a TXT file.
+
+## Tech Stack
+
+### Frontend
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Axios
+
+### Backend
+- Python
+- FastAPI
+- SQLAlchemy
+- SQLite
+
+## Project Structure
+
+```text
+MeetScribe/
+├── app/
+│   ├── layout.tsx
+│   └── page.tsx
+├── lib/
+│   └── api.ts
+├── public/
+│   └── audio/
+├── backend/
+│   ├── main.py
+│   ├── database.py
+│   ├── models.py
+│   ├── schemas.py
+│   └── requirements.txt
+├── package.json
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The local Python virtual environment and generated frontend files should not be committed to Git.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js and npm
+- Python 3.12 or a compatible version
+- Git
 
-## Learn More
+## Setup and Installation
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Clone the repository
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd fireflies-clone
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Replace `YOUR_GITHUB_REPOSITORY_URL` with your GitHub repository URL. The directory name may differ if you choose a different repository name.
 
-## Deploy on Vercel
+### 2. Set up the backend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+From the project root, run:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+Install the backend dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the API server:
+
+```bash
+uvicorn main:app --reload
+```
+
+The API is available at `http://127.0.0.1:8000`.
+
+Interactive API documentation: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+### 3. Set up the frontend
+
+Open a second terminal in the project root and run:
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+Keep both development servers running while using the application.
+
+## API Overview
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/health` | Check backend health |
+| GET | `/meetings` | Retrieve meetings |
+| POST | `/meetings` | Create a meeting |
+| GET | `/meetings/{meeting_id}` | Retrieve a meeting |
+| PATCH | `/meetings/{meeting_id}` | Update meeting details |
+| DELETE | `/meetings/{meeting_id}` | Delete a meeting |
+| GET | `/tasks` | Retrieve action items |
+| POST | `/tasks` | Create an action item |
+| PATCH | `/tasks/{task_id}` | Update an action item |
+| DELETE | `/tasks/{task_id}` | Delete an action item |
+
+## Database Design
+
+MeetScribe uses SQLite with SQLAlchemy models.
+
+### Meetings
+Meeting records include a title, date, duration, participants, summary, transcript, and topics.
+
+### Tasks
+Action items include a title, completion status, and a reference to their associated meeting through a foreign key.
+
+## Assumptions and Limitations
+
+- MeetScribe is an independent educational project inspired by meeting intelligence platforms; it is not an official Fireflies.ai product.
+- Meeting records are stored in SQLite during local development.
+- Sample or seeded data demonstrates summaries and transcripts.
+- The audio player uses sample audio; it does not generate a matching transcript.
+- Live meeting bots, real-time speech-to-text, external integrations, and production authentication are not implemented.
+- Summaries are demonstration content and are not generated by a live AI service.
+- Production deployment requires appropriate API URL, CORS, and persistent-storage configuration.
+
+## Future Improvements
+
+- Integrate speech-to-text transcription.
+- Add AI-generated summaries and meeting question answering.
+- Add authentication and team collaboration.
+- Add transcript comments, highlights, and additional export formats.
+- Support production deployment with managed persistent storage.
+
+## License
+
+Developed as an educational full-stack application.
